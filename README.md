@@ -43,9 +43,9 @@ Musk’s tweet mentioning Bitcoin?
 
 - [Elon Musk Tweets](https://www.kaggle.com/datasets/ayhmrba/elon-musk-tweets-2010-2021?resource=download)
 
-- - [Tesla daily stock market price](https://www.nasdaq.com/market-activity/stocks/tsla/historical)
+- [Tesla daily stock market price](https://www.nasdaq.com/market-activity/stocks/tsla/historical)
 
-[Bitcoin daily price](https://www.kaggle.com/datasets/rishabhkmr/bitcoin-historical-price-usd)
+- [Bitcoin daily price](https://www.kaggle.com/datasets/rishabhkmr/bitcoin-historical-price-usd)
 
 - [Dogecoin daily price](https://www.kaggle.com/datasets/dhruvildave/dogecoin-historical-data)
 
