@@ -6,7 +6,7 @@ Fall 2022
 
 ## Overview
 
-### Elon Musk’s tweets’ influence on Tesla, Bitcoin, and Dogecoin prices
+### Elon Musk  tweets’ influence on Tesla, Bitcoin, and Dogecoin prices
 Elon Musk, CEO of Tesla and SpaceX, is curently one of the most influential businessmen 
 on the planet. He is well known to be active on social media, especially Twitter. His 
 tweets have been caught up in various controversies, sometimes creating chaos for the 
