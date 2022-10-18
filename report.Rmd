@@ -1,0 +1,18 @@
+---
+title: "Report"
+author: "Haeun (Hannah) Hwangbo"
+date: "2022-10-18"
+output: pdf_document
+---
+
+# Stock prices
+
+![open price](figures/all_stocks_open_price.png)
+
+![daily high low](figures/all_stocks_daily_high_low.png)
+
+![daily change](figures/all_stocks_daily_close_change.png)
+
+# Elon musk monthly tweet statistics
+
+![monthly](figures/monthly_tweet_stats.png)
