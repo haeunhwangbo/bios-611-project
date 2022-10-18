@@ -1,6 +1,5 @@
 library(tidyverse)
 
-setwd('/home/rstudio/project')
 
 set_timeframe_stock <- function(df){
   df %>% filter(between(Date, as.Date('2020-01-01'), as.Date('2022-02-28')))
