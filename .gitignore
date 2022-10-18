@@ -3,3 +3,5 @@ data/.DS_Store
 figures/.DS_Store
 data/preprocessed/
 figures/
+*Rplots*
+.bash_history
