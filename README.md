@@ -7,6 +7,7 @@ Fall 2022
 ## Overview
 
 ### Elon Musk  tweets’ influence on Tesla, Bitcoin, and Dogecoin prices
+
 Elon Musk, CEO of Tesla and SpaceX, is curently one of the most influential businessmen 
 on the planet. He is well known to be active on social media, especially Twitter. His 
 tweets have been caught up in various controversies, sometimes creating chaos for the 
@@ -23,8 +24,7 @@ market prices as well as the prices of two cryptocurrencies that have been at th
 the controversies, Bitcoin and Dogecoin. The timeframe will be between January 1st of 2020 
 to March 5th of 2022. I will use daily prices (volume, open, close, high, low) for Tesla, 
 Bitcoin, and Dogecoin. The volatility will be measured as the difference between the daily 
-high and low prices. 30-minute window prices are available for Bitcoin, and this will be used 
-for more detailed analysis. For Elon Musk’s tweets, the posting time, the number of retweets, 
+high and low prices. For Elon Musk’s tweets, the posting time, the number of retweets, 
 the number of likes, and the text contents will be used.
 
 Part 1 will be exploratory analysis. In this part, I will answer the following questions. 
@@ -38,12 +38,41 @@ the largest volatility in the prices? How much would you have earned if you had 
 stock/crypto right before Musk’s mention of it? How long does the volatility last after Elon
 Musk’s tweet mentioning Bitcoin? 
 
+## Usage
+
+### Installation
+
+```{shell}
+# clone the repository on your machine
+$ git clone https://github.com/haeunhwangbo/bios-611-project.git
+
+# build docker container
+$ docker build . -t elon
+
+# run docker and start bash
+$ docker run \
+--rm \
+-p 8787:8787 -p 8080:8080 \  # 8787 for rstudio, 8080 for rshiny
+-v "$(pwd)":/home/rstudio/project/ \
+-e PASSWORD=password -it elon \
+sudo -H -u rstudio /bin/bash -c "cd ~/; /bin/bash"
+```
+
+### Run
+
+Once inside the docker container, you can use the following command in the bash terminal to
+generate the full report.
+
+```{shell}
+$ make report.pdf
+```
+
 
 ## Datasets
 
-- [Elon Musk Tweets](https://www.kaggle.com/datasets/ayhmrba/elon-musk-tweets-2010-2021?resource=download)
+- [Elon Musk Tweets](https://www.kaggle.com/datasets/andradaolteanu/all-elon-musks-tweets)
 
-- [Tesla daily stock market price](https://www.nasdaq.com/market-activity/stocks/tsla/historical)
+- [Tesla daily stock market price](https://www.kaggle.com/datasets/harshsingh2209/tesla-stock-pricing-20172022)
 
 - [Bitcoin daily price](https://www.kaggle.com/datasets/rishabhkmr/bitcoin-historical-price-usd)
 
