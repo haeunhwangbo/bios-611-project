@@ -52,8 +52,8 @@ $ docker build . -t elon
 # run docker and start bash
 $ docker run \
 --rm \
--p 8787:8787 -p 8080:8080 \  # 8787 for rstudio, 8080 for rshiny
--v "$(pwd)":/home/rstudio/project/ \
+-p 8787:8787 -p 8080:8080 \
+-v "$(pwd)":/home/rstudio/ \
 -e PASSWORD=password -it elon \
 sudo -H -u rstudio /bin/bash -c "cd ~/; /bin/bash"
 ```
