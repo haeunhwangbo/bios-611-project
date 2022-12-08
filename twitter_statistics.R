@@ -5,7 +5,7 @@ library(lubridate)
 
 load(file.path(getwd(), 'data/preprocessed/all_data.RData'))
 
-twitter <- twitter %>% mutate(year_month = floor_date(date, "month"))
+twitter <- twitter %>% mutate(year_month = floor_date(Date, "month"))
 # Monthly statistics bar chart
 # Average number of tweets
 # Average number of likes per tweet
@@ -14,8 +14,8 @@ twitter <- twitter %>% mutate(year_month = floor_date(date, "month"))
 
 monthly <- twitter %>% group_by(year_month) %>% 
   summarise(n_tweets = n(),
-            avg_likes = mean(likes_count),
-            avg_retweets = mean(retweets_count))
+            avg_likes = mean(Likes),
+            avg_retweets = mean(Retweets))
 
 p1 <- ggplot(monthly, aes(x=year_month, y=n_tweets)) +
   geom_line() +
