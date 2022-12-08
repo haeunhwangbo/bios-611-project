@@ -4,55 +4,48 @@ library(gridExtra)
 
 load(file.path(getwd(), 'data/preprocessed/all_data.RData'))
 
-bitcoin <- bitcoin %>% mutate(High_Low = High - Low,
-                              Daily_Change = 100* (Close - lag(Close)) / lag(Close))
-dogecoin <- dogecoin %>% mutate(High_Low = High - Low,
-                                Daily_Change = 100* (Close - lag(Close)) / lag(Close))
-tesla <- tesla %>% mutate(High_Low = High - Low,
-                          Daily_Change = 100 * (Close - lag(Close)) / lag(Close))
-
 
 # bicoin
-p1 <- ggplot(bitcoin, aes(x=Date, y=High_Low)) +
+p1 <- ggplot(bitcoin, aes(x=Date, y=Intraday_Volatility)) +
   geom_line(color='orange') +
   ggtitle("Bitcoin") +
-  ylab("Daily High - Low ($)")
+  ylab("Intraday Volatility")
 
 # dogecoin
-p2 <- ggplot(dogecoin, aes(x=Date, y=High_Low)) +
+p2 <- ggplot(dogecoin, aes(x=Date, y=Intraday_Volatility)) +
   geom_line(color='blue') +
   ggtitle("Dogecoin") +
-  ylab("Daily High - Low ($)")
+  ylab("Intraday Volatility")
 
 
 # tesla
-p3 <- ggplot(tesla, aes(x=Date, y=High_Low)) +
+p3 <- ggplot(tesla, aes(x=Date, y=Intraday_Volatility)) +
   geom_line(color='red') +
   ggtitle("Tesla") +
-  ylab("Daily High - Low ($)")
+  ylab("Intraday Volatility")
 
 
 p <- grid.arrange(p1, p2, p3, nrow=3)
 
 
 # bicoin
-q1 <- ggplot(bitcoin, aes(x=Date, y=Daily_Change)) +
+q1 <- ggplot(bitcoin, aes(x=Date, y=Interday_Change)) +
   geom_line(color='orange') +
   ggtitle("Bitcoin") +
-  ylab("Daily Change (%)")
+  ylab("Inter Day Change (%)")
 
 # dogecoin
-q2 <- ggplot(dogecoin, aes(x=Date, y=Daily_Change)) +
+q2 <- ggplot(dogecoin, aes(x=Date, y=Interday_Change)) +
   geom_line(color='blue') +
   ggtitle("Dogecoin") +
-  ylab("Daily Change (%)")
+  ylab("Inter Day Change (%)")
 
 
 # tesla
-q3 <- ggplot(tesla, aes(x=Date, y=Daily_Change)) +
+q3 <- ggplot(tesla, aes(x=Date, y=Interday_Change)) +
   geom_line(color='red') +
   ggtitle("Tesla") +
-  ylab("Daily Change (%)")
+  ylab("Inter Day Change (%)")
 
 
 q <- grid.arrange(q1, q2, q3, nrow=3)
@@ -64,6 +57,8 @@ output_dir <- file.path(getwd(), "figures")
 if (!dir.exists(output_dir)){
   dir.create(output_dir)
 }
+
+
 
 ggsave("all_stocks_daily_high_low.png",
        plot = p,
