@@ -1,18 +1,160 @@
 ---
-title: "Report"
+title: "BIOS611 Final Report"
 author: "Haeun (Hannah) Hwangbo"
-date: "2022-10-18"
+date: "2022-12-08"
 output: pdf_document
 ---
 
-# Stock prices
+# Motivation
 
-![open price](figures/all_stocks_open_price.png)
+Elon Musk tweets’ influence on Tesla, Bitcoin, and Dogecoin prices
+Elon Musk, CEO of Tesla and SpaceX, is curently one of the most influential businessmen 
+on the planet. He is well known to be active on social media, especially Twitter. 
+His tweets have been caught up in various controversies, sometimes creating chaos for 
+the stockholders of his companies. His tweets have also caused the prices of 
+cryptocurrencies to swing wildly in the past two years. For instance, after his first 
+tweet about Dogecoin, a lesser-known cryptocurrency at that time, the prices of this crypto 
+skyrocketed. A Bloomberg opinion columnist, Matt Levine, made a remark on this phenomenon, 
+calling it “the Elon Markets Hypothesis”. Levine commented “the way finance works now is that 
+things are valuable not based on their cash flows but on their proximity to Elon Musk.” 
+This motivated the project.
 
-![daily high low](figures/all_stocks_daily_high_low.png)
+# Objective
 
-![daily change](figures/all_stocks_daily_close_change.png)
+In this project, I will build random forest classifiers that predict daily percent changes and
+intraday volatility of bitcoin, dogecoin, and tesla prices from Elon Musk's tweets.
+The timeframe will be between January 1st of 2021 to December 31th of 2021. 
 
-# Elon musk monthly tweet statistics
+# Explorartory Analysis
 
-![monthly](figures/monthly_tweet_stats.png)
+## Twitter
+
+Elon Musk's twitter data was obtained from [Kaggle]((https://www.kaggle.com/datasets/hisanai/elon-musk-tweets-5-years?select=Elon+2020-2021.csv)).
+The text content of the tweet, number of likes, number of retweets, number of replies, 
+and existance of media was obtained.
+
+I first asked what the monthly trends of these tweet statistics looked like (Figure 1).
+
+![Monthly tweet statistics](figures/monthly_tweet_stats.png)
+
+The next thing I asked was what are the most frequently used words in his tweet. For text
+preprocessing, all letters were converted to lower case and hashtags, stop words, and digits were
+removed. 
+
+![Frequently used word counts](figures/tweet_word_counts.png)
+
+The top 2 words used in his tweets were `tesla` and `spacex`, which are both companies he owns 
+(Figure 2).
+
+![Word cloud](figures/tweet_word_cloud.png)
+
+From the word cloud, we also see `bitcoin` and `doge` are also mentioned frequently (Figure 3).
+
+
+## Stock/crypto prices
+
+For stock/crypto prices, I focused on the three variables: `Close price`, `Intraday Volatility`, 
+and `Interday Change`. Intraday volatility measure how the prices fluctate within a day. I used
+Garman & Klass (1980) definition:
+$$GK = 0.5 \log{(High/Low)}^2 - (2log2-1)\log{(Close/Open)}^2$$
+Interday cahnge was measured as percentage change between close prices between two consecutive 
+days. I first investigated the trends of these variables over time (Figures 4-6).
+
+![Trends of close prices](figures/all_stocks_close_price.png)
+
+![Trends of intraday volatility](figures/all_stocks_daily_high_low.png)
+
+![Trends of interday change](figures/all_stocks_daily_close_change.png)
+
+## Crude Analysis
+
+My hypothesis was that the mention of the stock/crypto (i.e., bitcoin, dogecoin, tesla, etc.)
+would be the most direct predictor of the that stock/crypto's price changes and volatility. 
+I first investigated when these words were mentioned (Figures 7 and 8). 
+
+![Mention timeline interday change](figures/tweet_mentions_interday_change_lineplot.png)
+
+![Mention timeline intraday volatility](figures/tweet_mentions_intraday_volatility_lineplot.png)
+
+For a crude analysis, I used t-test to see whether there were differences in the days when the 
+stock/crypto was mentioned or not mentioned (Figures 9 and 10).
+
+![Mention vs. interday change boxplot](figures/tweet_mentions_interday_change_boxplot.png)
+
+![Mention vs. intraday volatility boxplot](figures/tweet_mentions_intraday_volatility_boxplot.png)
+
+Out of the six comparisons, bitcoin's intraday volatility showed significant difference 
+(p=0.027, two-sided t-test).
+
+# Model Prediction
+
+## Preparing Input Data
+
+Initially, the following features were considered as input variables.
+- number of tweets per day
+- average likes per day
+- average retweets per day
+- average replies per day
+- sum of sentiment scores per day
+- existence of attached media
+- mention of bitcoin, BTC
+- mention of doge
+- mention of tesla, TSLA
+
+For sentiment scoring, I used `afinn` data from `tidytext` library, which scores a set 
+of common words by there sentiment ranging from -5 to 5. I investigated if any of these 
+variables are strongly correlated (Figure 11).
+
+![Correlation between input variables](figures/model_variables_pairplot.png)
+
+Average liks and average retweets were most strongly correlated, and thus, average retweets
+were removed from model input.
+
+## Model outcomes
+
+I decided to use binary variables for interday change and intraday volatility.
+Interday Change > 0 was considered as positive. Intraday volatility above median was
+cosidered positive.
+
+## Building the Model
+
+I built 6 random forest classifiers for each BTC Interday Change, BTC Intraday Volatility,
+DOGE Interday Change, DOGE Intraday Volatility, TSLA Interday Change, and TSLA Intraday Volatility.
+I used `sci-kit learn`'s random forest classifier to build the models. The train and test
+sets were divdied by 8:2 ratio. For hyperparameter tuning, randomized search with 4-fold cross
+validation was used. The best models were chosen from 100 iterations. 
+
+## Feature Importance
+
+I first investigated which feature were important to the models (Figure 12). For all models, number of tweets,
+average likes, average likes, and sentiment score were the top predictors. Surprisingly, mentions
+of the stock/crypto did not have significant influence on the interday change and intraday
+volatility. 
+
+![Feature importance](figures/all_models_feature_importance_barplot.png)
+
+## Model Performance
+
+Model performances were tested on the test set which was never used for training. I compared each
+model's precision, recall, F1 score, and ROC curve (Figures 13, 14).
+
+![All models performance](figures/all_models_performance_barplot.png)
+
+![All models ROC curves](figures/all_models_auc.png)
+
+Out of the 6 models, the best model was for tesla interday change (F1 score: 0.71) followed by 
+dogecoin intraday volatility (F1 score: 0.65). The worst model was dogecoin interday change 
+(F1 score 0.33). This was a very interesting outcome. Elon musk's tweet impacted on high volatility 
+within a day, but this did not carry on to daily changes. Overall, the model performance ranged from
+bad (i.e. worse than random) to mediocore. However, this was not surprising, considering that there
+are far more important predictors for stock/crypto prices.
+
+## Limitations
+
+Stock/crypto prices are timeseries data, however this aspect was not considered. Expanding the training
+set (longer timeframe if the dogecoin-saga went longer) might have improved model performances. Scroing
+the tweets in per-tweet level, not as daily aggregates also might have improved the models. Hypothetically,
+"dogecoin is awesome!" is a stronger predictor than "dogecoin" and "I am awesome". Under the current
+setting, these two results in a same input. Moreover, many of Elon Musk's tweet message was delivered
+by a attached media (e.g. pictures). Only text was processed in this model.
+
