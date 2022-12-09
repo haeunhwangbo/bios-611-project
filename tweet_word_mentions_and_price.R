@@ -1,6 +1,7 @@
 library(tidyverse)
 library(ggplot2)
 library(ggpubr)
+library(gridExtra)
 
 load(file.path(getwd(), 'data/preprocessed/all_data.RData'))
 
@@ -90,7 +91,7 @@ q1 <- ggplot(bitcoin, aes(x=Date, y=Intraday_Volatility)) +
   geom_line(color='orange') +
   geom_vline(data=bitcoin_mentions, aes(xintercept=Date), linetype=2) +
   ggtitle("Bitcoin") +
-  ylab("Intra Day Change ($)")
+  ylab("Intraday Volatility")
 
 
 # dogecoin
@@ -98,7 +99,7 @@ q2 <- ggplot(dogecoin, aes(x=Date, y=Intraday_Volatility)) +
   geom_line(color='blue') +
   geom_vline(data=dogecoin_mentions, aes(xintercept=Date), linetype=2) +
   ggtitle("Dogecoin") +
-  ylab("Intra Day Change ($)")
+  ylab("Intraday Volatility")
 
 
 # tesla
@@ -106,10 +107,37 @@ q3 <- ggplot(tesla, aes(x=Date, y=Intraday_Volatility)) +
   geom_line(color='red') +
   geom_vline(data=tesla_mentions, aes(xintercept=Date), linetype=2) +
   ggtitle("Tesla") +
-  ylab("Intra Day Change ($)")
+  ylab("Intraday Volatility")
 
 
 q <- grid.arrange(q1, q2, q3, nrow=3)
+
+
+r1 <- ggplot(bitcoin, aes(x=Date, y=Interday_Change)) +
+  geom_line(color='orange') +
+  geom_vline(data=bitcoin_mentions, aes(xintercept=Date), linetype=2) +
+  ggtitle("Bitcoin") +
+  ylab("Interday Change (%)")
+
+
+# dogecoin
+r2 <- ggplot(dogecoin, aes(x=Date, y=Interday_Change)) +
+  geom_line(color='blue') +
+  geom_vline(data=dogecoin_mentions, aes(xintercept=Date), linetype=2) +
+  ggtitle("Dogecoin") +
+  ylab("Interday Change (%)")
+
+
+# tesla
+r3 <- ggplot(tesla, aes(x=Date, y=Interday_Change)) +
+  geom_line(color='red') +
+  geom_vline(data=tesla_mentions, aes(xintercept=Date), linetype=2) +
+  ggtitle("Tesla") +
+  ylab("Interday Change (%)")
+
+
+r <- grid.arrange(r1, r2, r3, nrow=3)
+
 
 # export figures
 output_dir <- file.path(getwd(), "figures")
@@ -134,6 +162,15 @@ ggsave("tweet_mentions_intraday_volatility_lineplot.png",
        units = 'in',
        device = 'png',
        path = output_dir)
+
+ggsave("tweet_mentions_interday_change_lineplot.png",
+  plot = r,
+  width = 4,
+  height = 6,
+  units = "in",
+  device = "png",
+  path = output_dir
+)
 
 ggsave("tweet_mentions_interday_change_boxplot.png",
        plot = box_inter,
