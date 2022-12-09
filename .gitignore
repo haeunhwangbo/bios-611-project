@@ -1,7 +1,16 @@
 .DS_Store
 data/.DS_Store
+data/*.csv
+data/*.Rdata
 figures/.DS_Store
 data/preprocessed/
+data/model/
 figures/
+build_model.log
+report.pdf
 *Rplots*
 .bash_history
+.cache/
+.config/
+.local/
+.python_history
