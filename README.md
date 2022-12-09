@@ -1,6 +1,7 @@
 # BIOS 611 Project
 
 Author: Haeun (Hannah) Hwangbo
+
 Fall 2022
 
 
@@ -43,19 +44,19 @@ Musk’s tweet mentioning Bitcoin?
 ### Installation
 
 ```{shell}
-# clone the repository on your machine
+# Step 1: clone the repository on your machine
 $ git clone https://github.com/haeunhwangbo/bios-611-project.git
+$ source aliases.sh
 
-# build docker container
-$ docker build . -t elon
+# Step 2: build docker container
+$ build
 
-# run docker and start bash
-$ docker run \
---rm \
--p 8787:8787 -p 8080:8080 \
--v "$(pwd)":/home/rstudio/ \
--e PASSWORD=password -it elon \
-sudo -H -u rstudio /bin/bash -c "cd ~/; /bin/bash"
+# Step 3: run bash within docker
+$ runbash
+
+# OR
+# Step 3: run rstudio within docker
+$ runrstudio
 ```
 
 ### Run
@@ -64,13 +65,15 @@ Once inside the docker container, you can use the following command in the bash 
 generate the full report.
 
 ```{shell}
+$ runbash
+# you are now inside the docker container
 $ make report.pdf
 ```
 
 
 ## Datasets
 
-- [Elon Musk Tweets](https://www.kaggle.com/datasets/andradaolteanu/all-elon-musks-tweets)
+- [Elon Musk Tweets](https://www.kaggle.com/datasets/hisanai/elon-musk-tweets-5-years?select=Elon+2020-2021.csv)
 
 - [Tesla daily stock market price](https://www.kaggle.com/datasets/harshsingh2209/tesla-stock-pricing-20172022)
 
