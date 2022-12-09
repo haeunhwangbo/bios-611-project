@@ -22,22 +22,20 @@ the project.
 
 In this project, I will analyze how Elon Musk’s tweets impacted the prices of Tesla’s stock 
 market prices as well as the prices of two cryptocurrencies that have been at the heart of 
-the controversies, Bitcoin and Dogecoin. The timeframe will be between January 1st of 2020 
-to March 5th of 2022. I will use daily prices (volume, open, close, high, low) for Tesla, 
+the controversies, Bitcoin and Dogecoin. The timeframe will be between January 1of 2021
+to December 31 of 2022. I will use daily prices (volume, open, close, high, low) for Tesla, 
 Bitcoin, and Dogecoin. The volatility will be measured as the difference between the daily 
 high and low prices. For Elon Musk’s tweets, the posting time, the number of retweets, 
 the number of likes, and the text contents will be used.
 
 Part 1 will be exploratory analysis. In this part, I will answer the following questions. 
 What are the historical price trends during this time? What were the trends of volatility? 
-How does volume correlate with volatility? Were there similar trends between the two cryptocurrencies? 
+How does volume correlate with volatility?
 What was the frequency of Elon Musk’s tweets during this time? What were the most often used keywords? 
 
-Part 2 will investigate the relationship between Musk’s tweets and stock/crypto prices. 
-I will try to answer the following questions. What were the keywords in his tweets that triggered 
-the largest volatility in the prices? How much would you have earned if you had bought the 
-stock/crypto right before Musk’s mention of it? How long does the volatility last after Elon
-Musk’s tweet mentioning Bitcoin? 
+Part 2 will investigate the relationship between Musk’s tweets and stock/crypto prices. I will
+build random forest classifiers to predict the stock/crypto daily price changes and intraday volatility.
+Then, I will compare the model performances.
 
 ## Usage
 
