@@ -62,7 +62,7 @@ $ runrstudio
 ### Run
 
 Once inside the docker container, you can use the following command in the bash terminal to
-generate the full report.
+generate the full report. The model building will take some time (up to 20 minutes).
 
 ```{shell}
 $ runbash

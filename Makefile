@@ -62,6 +62,7 @@ figures/model_variables_pairplot.png\
 	Rscript prepare_model_input.R
 
 # build model
+# this will take some time
 figures/all_models_auc.png\
  data/model/BTC-Interday_Change.model.pkl\
  data/model/BTC-Intraday_Volatility.model.pkl\
